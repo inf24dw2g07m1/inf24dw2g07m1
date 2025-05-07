@@ -1,0 +1,22 @@
+{
+  "name": "inf25dw2g07",
+  "version": "1.0.0",
+  "description": "Trabalho DW2 Grupo 07 (Biblioteca)\r Repositório para demostrar projeto desenvolvido da aula de Desenvolvimento Web 2, que foi uma criação de uma biblioteca. \r Desenvolvido por: @Alessandro0012 and @Tiagodebrit0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
