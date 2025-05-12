@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: inf25dw2g07
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    ports:
+      - "3307:3306" # A porta externa 3307 mapeia para a porta interna 3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  nodeapp:
+    build: .
+    container_name: node_app_container
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    volumes:
+      - .:/usr/src/app
+    command: sh -c "npm install && node server.js"
+    environment:
+      DB_HOST: mysql
+      DB_USER: user
+      DB_PASSWORD: userpass
+      DB_NAME: inf25dw2g07
+
+volumes:
+  mysql_data:

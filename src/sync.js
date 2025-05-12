@@ -1,13 +1,13 @@
-
 const sequelize = require('./config/database');
-const User = require('./models/user');
+require('./models/user');
 
-sequelize.sync({ force: false })
-  .then(() => {
-    console.log('Tabelas sincronizadas!');
-    process.exit();
-  })
-  .catch((err) => {
-    console.error('Erro ao sincronizar tabelas:', err);
+(async () => {
+  try {
+    await sequelize.sync({ force: false });
+    console.log('Banco sincronizado com sucesso!');
+    process.exit(0);
+  } catch (error) {
+    console.error(error);
     process.exit(1);
-});
+  }
+})();
