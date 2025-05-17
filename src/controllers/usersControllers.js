@@ -1,37 +1,60 @@
 const User = require('../models/user');
 
-// Cadastrar novo usuário
-exports.createUser = async (req, res) => {
-  const { name, email } = req.body;
-
-  if (!name || !email) {
-    return res.status(400).json({ error: 'Nome e email são obrigatórios.' });
-  }
-
+// GET todos
+exports.getAllUsers = async (req, res) => {
   try {
-    const existingUser = await User.findOne({ where: { email } });
-    if (existingUser) {
-      return res.status(409).json({ error: 'Email já cadastrado.' });
-    }
-    
-    const newUser = await User.create({ name, email });
-    res.status(201).json(newUser);
+    const users = await User.findAll();
+    res.status(200).json(users);
   } catch (error) {
-    console.error(error);
-    if (error.name === 'SequelizeValidationError') {
-      return res.status(400).json({ error: error.errors.map(e => e.message) });
-    }
-    res.status(500).json({ error: 'Erro ao cadastrar usuário.' });
+    res.status(500).json({ error: 'Erro ao buscar usuários.' });
   }
 };
 
-// Listar todos os usuários
-exports.getAllUsers = async (req, res) => {
+// GET por ID
+exports.getUserById = async (req, res) => {
   try {
-    const users = await User.findAll({ order: [['created_at', 'DESC']] });
-    res.status(200).json(users);
+    const user = await User.findByPk(req.params.id);
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+    res.status(200).json(user);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao buscar usuários.' });
+    res.status(500).json({ error: 'Erro ao buscar usuário.' });
+  }
+};
+
+// POST
+exports.createUser = async (req, res) => {
+  const { nome, email, password } = req.body;
+  try {
+    const novo = await User.create({ nome, email, password });
+    res.status(201).json(novo);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao criar usuário.' });
+  }
+};
+
+// PUT
+exports.updateUser = async (req, res) => {
+  const { nome, email, password } = req.body;
+  try {
+    const user = await User.findByPk(req.params.id);
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+
+    await user.update({ nome, email, password });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao atualizar usuário.' });
+  }
+};
+
+// DELETE
+exports.deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    if (!user) return res.status(404).json({ error: 'Usuário não encontrado.' });
+
+    await user.destroy();
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao excluir usuário.' });
   }
 };

@@ -14,6 +14,7 @@ services:
       - "3307:3306" # A porta externa 3307 mapeia para a porta interna 3306
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d 
 
   nodeapp:
     build: .
