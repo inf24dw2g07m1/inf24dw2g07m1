@@ -32,11 +32,9 @@ API: http://localhost:3000/
 Swagger UI: http://localhost:3000/api-docs
 
 /// Utiliza-se os tokens para acessar as rotas protegidas:
+// Nas requisições protegidas, adicione:
+    Authorization: Bearer TOKEN_AQUI
 
-Nas requisições protegidas, adicione:
-Authorization: Bearer TOKEN_AQUI
-
-```
 /// Endpoints:
 // Usuarios (`/api/users`)
 `GET /` → Lista usuários (protegido)
@@ -86,6 +84,5 @@ Documentação Swagger;
 Ambiente isolado com Docker;
 Autenticação baseada em token;
 
----
 /// Testes:
 Utilize o Postman (https://www.postman.com/) para testar todos os endpoints. Pode-se criar manualmente ou exportar alguma .
