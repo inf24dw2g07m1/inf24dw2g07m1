@@ -31,8 +31,7 @@ DB_PORT=3306
 
 ## Autenticação Google
 GOOGLE_CLIENT_ID=542578077652-7c662u1ujlbk015fdrqcvo1i9ro31fh1.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=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
-SESSION_SECRET=minha_chave_secreta
+GOOGLE_CLIENT_SECRET=minha_chave_secreta
 
 ## App
 PORT=3000
