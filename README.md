@@ -19,56 +19,60 @@ Desenvolvido por: @Alessandro0012 e @Tiagodebrit0
 - Docker Compose: https://docs.docker.com/compose/  
 - Terminal (bash, CMD ou PowerShell)
 
-## Variáveis de Ambiente ".env"
+### Variáveis de Ambiente ".env"
 Cria um arquivo `.env` na raiz com o seguinte conteúdo:
 
-```
+## DB
 DB_NAME=inf25dw2g07
 DB_USER=user
 DB_PASSWORD=userpass
 DB_HOST=mysql
 DB_PORT=3306
-```
+
+## Autenticação Google
+GOOGLE_CLIENT_ID=542578077652-7c662u1ujlbk015fdrqcvo1i9ro31fh1.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
+SESSION_SECRET=minha_chave_secreta
+
+## App
+PORT=3000
+
+### Instalação das Dependências locais
+npm install
+
+## Instalação das Dependências locais
+npm install express sequelize mysql2 dotenv cors express-session passport passport-google-oauth20 swagger-ui-express yamljs
 
 ## Passos úteis para Instalação e Execução
 
 ### Clonar do GitHub:
-```
+
 git clone https://github.com/teu-usuario/api-livraria.git
 cd api-livraria
-```
 
 ### Upload dos containers com Docker Compose:
-```
 docker-compose up --build -d
-```
 
-### Dentro do container Node.js, sincronizar as tabelas:
-```
+## Dentro do container Node.js, sincronizar as tabelas:
 docker exec -it node_app_container node sync.js
-```
-### Para abrir o banco com os dados inseridos:
+
+## Para abrir o banco com os dados inseridos:
 docker exec -it node_app_container node seed.js
 
-## Acessar a documentação Swagger:
+### Acessar a documentação Swagger:
 - API: http://localhost:3000/  
 - Swagger UI: http://localhost:3000/api-docs
 
-## Comandos úteis
-- Parar containers:
+###  Comandos Uteis
+## Parar containers:
 ```
 docker-compose down
 ```
-
-- Parar e remover volumes (reinicia banco do zero):
-```
+## Parar e remover volumes (reinicia banco do zero):
 docker-compose down -v
-```
 
-- Ver logs de execução:
-```
+## Ver logs de execução:
 docker logs node_app_container
-```
 
 ## Documentação do Swagger:
 Pode-se acessar em:  
