@@ -6,15 +6,14 @@ services:
     container_name: mysql_container
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root         # ✅ necessário para inicializar o MySQL
       MYSQL_DATABASE: inf25dw2g07
       MYSQL_USER: user
       MYSQL_PASSWORD: userpass
     ports:
-      - "3307:3306" # A porta externa 3307 mapeia para a porta interna 3306
+      - "3307:3306"                     # 3307 externo (host), 3306 interno (container)
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./init:/docker-entrypoint-initdb.d 
 
   nodeapp:
     build: .
@@ -28,10 +27,12 @@ services:
       - .:/usr/src/app
     command: sh -c "npm install && node server.js"
     environment:
-      DB_HOST: mysql
+      DB_HOST: mysql                   #  nome do serviço MySQL
       DB_USER: user
       DB_PASSWORD: userpass
       DB_NAME: inf25dw2g07
+      DB_PORT: 3306                    # use sempre a porta interna aqui!
 
 volumes:
   mysql_data:
+

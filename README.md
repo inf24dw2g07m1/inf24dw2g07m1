@@ -15,6 +15,25 @@ Swagger (OpenAPI 3.0)
 Docker & Docker Compose
 Postman (para testes)
 
+/// Pré-Requisitos
+
+Docker: (https://www.docker.com/)
+Docker Compose:  (https://docs.docker.com/compose/)
+Terminal (bash, CMD ou PowerShell)
+
+
+/// Variaveis de Ambiente ".env"
+
+Cria um arquivo ".env" na raiz com o seguinte conteúdo:
+
+// env:
+
+DB_NAME=inf25dw2g07
+DB_USER=user
+DB_PASSWORD=userpass
+DB_HOST=mysql
+DB_PORT=3306
+
 /// Passos uteis para Instalação e Execução
 // Clonar do github: 
     https://github.com/teu-usuario/api-livraria.git
@@ -24,43 +43,27 @@ Postman (para testes)
     docker-compose up --build -d
 
 // Dentro do Container node.js, temos de sincronizar as tabelas:
-    docker exec -it node_app_container sh
-    node sync.js
+   docker exec -it node_app_container node sync.js
+
 
 /// Acessar a documentação Swagger: 
 API: http://localhost:3000/
 Swagger UI: http://localhost:3000/api-docs
 
-/// Utiliza-se os tokens para acessar as rotas protegidas:
-// Nas requisições protegidas, adicione:
-    Authorization: Bearer TOKEN_AQUI
+/// Comandos úteis
+// Parar containers:
+docker-compose down
 
-/// Endpoints:
-// Usuarios (`/api/users`)
-`GET /` → Lista usuários (protegido)
-`POST /` → Cria usuário
-`GET /:id` → Buscar usuário (protegido)
-`PUT /:id` → Atualizar usuário (protegido)
-`DELETE /:id` → Remover usuário (protegido)
+// Parar e remover volumes (reinicia banco do zero):
+docker-compose down -v
 
-// Autores (`/api/autores`)
-`GET /` → Lista autores (protegido)
-`POST /` → Cria autor (protegido)
-`GET /:id` → Buscar autor (protegido)
-`PUT /:id` → Atualizar autor (protegido)
-`DELETE /:id` → Remover autor (protegido)
-
-// Livros (`/api/livros`)
-`GET /` → Lista livros (protegido)
-`POST /` → Cria livro (protegido)
-`GET /:id` → Buscar livro (protegido)
-`PUT /:id` → Atualizar livro (protegido)
-`DELETE /:id` → Remover livro (protegido)
+// Ver logs de execução:
+docker logs node_app_container
 
 
 /// Documentação do Swagger:
 Pode-se acessar em:  
-[http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+(http://localhost:3000/api-docs)
 
 
 /// Estrutura do Trabalho
@@ -70,7 +73,6 @@ Pode-se acessar em:
 │   ├── controllers/      # Lógica das rotas
 │   ├── routes/           # Definição de rotas
 │   ├── config/           # Conexão com o banco de dados
-│   └── auth/             # Configuração OAuth 2.0
 ├── docs/                 # Arquivo swagger.yaml
 ├── app.js                # Arquivo principal da API
 ├── sync.js               # Script para sincronizar o banco
@@ -82,7 +84,7 @@ CRUD completo para usuários, autores e livros;
 Proteção de rotas com OAuth 2.0;
 Documentação Swagger; 
 Ambiente isolado com Docker;
-Autenticação baseada em token;
+
 
 /// Testes:
 Utilize o Postman (https://www.postman.com/) para testar todos os endpoints. Pode-se criar manualmente ou exportar alguma .

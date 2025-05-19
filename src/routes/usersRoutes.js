@@ -1,17 +1,15 @@
 const express = require('express'); 
 const router = express.Router();
 const userController = require('../controllers/usersControllers');
-const oauth = require('../auth/oauthServer');
-const authenticate = oauth.authenticate();
 
-// Rota pública para criar novo user (sem token)
+// Rota pública para criar novo user
 router.post('/', userController.createUser);
 
-// Rotas protegidas com token
-router.get('/', authenticate, userController.getAllUsers);
-router.get('/:id', authenticate, userController.getUserById);
-router.put('/:id', authenticate, userController.updateUser);
-router.delete('/:id', authenticate, userController.deleteUser);
+// Rotas públicas (antes protegidas)
+router.get('/', userController.getAllUsers);
+router.get('/:id', userController.getUserById);
+router.put('/:id', userController.updateUser);
+router.delete('/:id', userController.deleteUser);
 
 module.exports = router;
 

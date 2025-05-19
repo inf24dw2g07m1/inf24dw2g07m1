@@ -50,6 +50,7 @@ exports.deleteAutor = async (req, res) => {
     await autor.destroy();
     res.status(204).end();
   } catch (error) {
+    console.error("Erro real ao buscar autores:", error);
     res.status(500).json({ error: 'Erro ao excluir autor.' });
   }
 };

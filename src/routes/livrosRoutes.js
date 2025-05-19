@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const livroController = require('../controllers/livrosControllers');
-const oauth = require('../auth/oauthServer');
-const authenticateRequest = oauth.authenticate();
 
-// Proteger todas as rotas com OAuth
-router.get('/', authenticateRequest, livroController.getAllLivros);
-router.get('/:id', authenticateRequest, livroController.getLivroById);
-router.post('/', authenticateRequest, livroController.createLivro);
-router.put('/:id', authenticateRequest, livroController.updateLivro);
-router.delete('/:id', authenticateRequest, livroController.deleteLivro);
+// Todas as rotas agora são públicas (sem OAuth)
+router.get('/', livroController.getAllLivros);
+router.get('/:id', livroController.getLivroById);
+router.post('/', livroController.createLivro);
+router.put('/:id', livroController.updateLivro);
+router.delete('/:id', livroController.deleteLivro);
 
 module.exports = router;
+

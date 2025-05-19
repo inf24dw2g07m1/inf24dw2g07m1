@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: API de Livraria
-  description: Documentação completa da API de usuários, autores e livros
+  description: API para gerenciamento de usuários, autores e livros
   version: "1.0.0"
 
 servers:
@@ -20,8 +20,6 @@ paths:
     get:
       tags: [Usuários]
       summary: Lista todos os usuários
-      security:
-        - bearerAuth: []
       responses:
         "200":
           description: Lista de usuários
@@ -43,17 +41,11 @@ paths:
       responses:
         "201":
           description: Usuário criado com sucesso
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
 
   /users/{id}:
     get:
       tags: [Usuários]
       summary: Busca um usuário por ID
-      security:
-        - bearerAuth: []
       parameters:
         - name: id
           in: path
@@ -71,9 +63,7 @@ paths:
           description: Usuário não encontrado
     put:
       tags: [Usuários]
-      summary: Atualiza um usuário por ID
-      security:
-        - bearerAuth: []
+      summary: Atualiza um usuário
       parameters:
         - name: id
           in: path
@@ -88,12 +78,10 @@ paths:
               $ref: '#/components/schemas/UserInput'
       responses:
         "200":
-          description: Usuário atualizado com sucesso
+          description: Atualizado com sucesso
     delete:
       tags: [Usuários]
-      summary: Remove um usuário por ID
-      security:
-        - bearerAuth: []
+      summary: Remove um usuário
       parameters:
         - name: id
           in: path
@@ -102,14 +90,12 @@ paths:
             type: integer
       responses:
         "204":
-          description: Usuário removido com sucesso
+          description: Removido com sucesso
 
   /autores:
     get:
       tags: [Autores]
       summary: Lista todos os autores
-      security:
-        - bearerAuth: []
       responses:
         "200":
           description: Lista de autores
@@ -122,8 +108,6 @@ paths:
     post:
       tags: [Autores]
       summary: Cria um novo autor
-      security:
-        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -137,9 +121,7 @@ paths:
   /autores/{id}:
     get:
       tags: [Autores]
-      summary: Busca um autor por ID
-      security:
-        - bearerAuth: []
+      summary: Busca autor por ID
       parameters:
         - name: id
           in: path
@@ -153,47 +135,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Autor'
-    put:
-      tags: [Autores]
-      summary: Atualiza um autor por ID
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AutorInput'
-      responses:
-        "200":
-          description: Autor atualizado com sucesso
-    delete:
-      tags: [Autores]
-      summary: Remove um autor por ID
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        "204":
-          description: Autor removido com sucesso
 
   /livros:
     get:
       tags: [Livros]
       summary: Lista todos os livros
-      security:
-        - bearerAuth: []
       responses:
         "200":
           description: Lista de livros
@@ -206,8 +152,6 @@ paths:
     post:
       tags: [Livros]
       summary: Cria um novo livro
-      security:
-        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -217,60 +161,6 @@ paths:
       responses:
         "201":
           description: Livro criado com sucesso
-
-  /livros/{id}:
-    get:
-      tags: [Livros]
-      summary: Busca um livro por ID
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Livro encontrado
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Livro'
-    put:
-      tags: [Livros]
-      summary: Atualiza um livro por ID
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LivroInput'
-      responses:
-        "200":
-          description: Livro atualizado com sucesso
-    delete:
-      tags: [Livros]
-      summary: Remove um livro por ID
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        "204":
-          description: Livro removido com sucesso
 
 components:
   schemas:
@@ -287,10 +177,9 @@ components:
           type: string
         createdAt:
           type: string
-          format: date-time
         updatedAt:
           type: string
-          format: date-time
+
     UserInput:
       type: object
       properties:
@@ -300,6 +189,7 @@ components:
           type: string
         password:
           type: string
+
     Autor:
       type: object
       properties:
@@ -311,10 +201,9 @@ components:
           type: string
         createdAt:
           type: string
-          format: date-time
         updatedAt:
           type: string
-          format: date-time
+
     AutorInput:
       type: object
       properties:
@@ -322,6 +211,7 @@ components:
           type: string
         email:
           type: string
+
     Livro:
       type: object
       properties:
@@ -333,10 +223,9 @@ components:
           type: integer
         createdAt:
           type: string
-          format: date-time
         updatedAt:
           type: string
-          format: date-time
+
     LivroInput:
       type: object
       properties:
@@ -344,8 +233,3 @@ components:
           type: string
         autorId:
           type: integer
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT

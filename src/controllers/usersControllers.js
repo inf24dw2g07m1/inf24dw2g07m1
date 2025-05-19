@@ -6,9 +6,11 @@ exports.getAllUsers = async (req, res) => {
     const users = await User.findAll();
     res.status(200).json(users);
   } catch (error) {
+    console.error('Erro detalhado:', error);  
     res.status(500).json({ error: 'Erro ao buscar usuários.' });
   }
 };
+
 
 // GET por ID
 exports.getUserById = async (req, res) => {

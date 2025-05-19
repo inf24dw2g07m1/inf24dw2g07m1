@@ -10,8 +10,15 @@ const Autor = sequelize.define('Autor', {
     type: DataTypes.STRING,
     unique: true,
     allowNull: false,
-  }
-
+    validate: {
+      isEmail: true,
+    }
+  },
+}, {
+  tableName: 'Autores',
+  timestamps: true,
 });
 
 module.exports = Autor;
+
+
