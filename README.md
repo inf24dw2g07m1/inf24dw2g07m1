@@ -3,7 +3,7 @@ INF25DW2G07
 Trabalho DW2 Grupo 07 (livraria)
 
 Esta é uma API RESTful desenvolvida em Node.js com Express, utilizando o Sequelize para integração com banco de dados MySQL, autenticação via OAuth2.0, documentação com Swagger e os containers com Docker.  
-Desenvolvido por: @Alessandro0012 e @Tiagodebrit0
+Desenvolvido por: @Alessandro0012 (a039890@umaia.pt); @Tiagodebrit0 (a041587@umaia.pt); @IgorChad (a043765@umaia.pt).
 
 ## Tecnologias que utilizamos no processo
 - Node.js  
