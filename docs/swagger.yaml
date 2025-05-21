@@ -3,10 +3,10 @@ info:
   title: API de Livraria
   description: API para gerenciamento de usuários, autores e livros
   version: "1.0.0"
-
+ 
 servers:
   - url: http://localhost:3000/api
-
+ 
 tags:
   - name: Usuários
     description: Operações relacionadas a usuários
@@ -14,7 +14,7 @@ tags:
     description: Operações relacionadas a autores
   - name: Livros
     description: Operações relacionadas a livros
-
+ 
 paths:
   /users:
     get:
@@ -41,7 +41,7 @@ paths:
       responses:
         "201":
           description: Usuário criado com sucesso
-
+ 
   /users/{id}:
     get:
       tags: [Usuários]
@@ -91,7 +91,7 @@ paths:
       responses:
         "204":
           description: Removido com sucesso
-
+ 
   /autores:
     get:
       tags: [Autores]
@@ -117,7 +117,7 @@ paths:
       responses:
         "201":
           description: Autor criado com sucesso
-
+ 
   /autores/{id}:
     get:
       tags: [Autores]
@@ -135,7 +135,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Autor'
-
+        "404":
+          description: Autor não encontrado
+    put:
+      tags: [Autores]
+      summary: Atualiza um autor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutorInput'
+      responses:
+        "200":
+          description: Autor atualizado com sucesso
+    delete:
+      tags: [Autores]
+      summary: Remove um autor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Autor removido com sucesso
+ 
   /livros:
     get:
       tags: [Livros]
@@ -161,7 +193,57 @@ paths:
       responses:
         "201":
           description: Livro criado com sucesso
-
+ 
+  /livros/{id}:
+    get:
+      tags: [Livros]
+      summary: Busca livro por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Livro encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Livro'
+        "404":
+          description: Livro não encontrado
+    put:
+      tags: [Livros]
+      summary: Atualiza um livro
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LivroInput'
+      responses:
+        "200":
+          description: Livro atualizado com sucesso
+    delete:
+      tags: [Livros]
+      summary: Remove um livro
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Livro removido com sucesso
+ 
 components:
   schemas:
     User:
@@ -179,7 +261,7 @@ components:
           type: string
         updatedAt:
           type: string
-
+ 
     UserInput:
       type: object
       properties:
@@ -189,7 +271,11 @@ components:
           type: string
         password:
           type: string
-
+      required:
+        - nome
+        - email
+        - password
+ 
     Autor:
       type: object
       properties:
@@ -203,7 +289,7 @@ components:
           type: string
         updatedAt:
           type: string
-
+ 
     AutorInput:
       type: object
       properties:
@@ -211,7 +297,10 @@ components:
           type: string
         email:
           type: string
-
+      required:
+        - nome
+        - email
+ 
     Livro:
       type: object
       properties:
@@ -225,7 +314,7 @@ components:
           type: string
         updatedAt:
           type: string
-
+ 
     LivroInput:
       type: object
       properties:
@@ -233,3 +322,7 @@ components:
           type: string
         autorId:
           type: integer
+      required:
+        - nome
+        - autorId
+ 
