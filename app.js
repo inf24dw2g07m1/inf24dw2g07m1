@@ -1,29 +1,25 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const router = express.Router();
+
 const userRoutes = require('./src/routes/usersRoutes');
 const autorRoutes = require('./src/routes/autoresRoutes');
 const livroRoutes = require('./src/routes/livrosRoutes');
 const swaggerUi = require('swagger-ui-express');
 const yaml = require('yamljs');
+const { isLoggedIn } = require('./src/routes/auth');
 const swaggerDocument = yaml.load('./docs/swagger.yaml');
 
-const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-//Swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Proteção Swagger
+router.use('/docs', isLoggedIn, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Rotas públicas (sem autenticação)
-app.use('/api/users', userRoutes);
-app.use('/api/autores', autorRoutes);
-app.use('/api/livros', livroRoutes);
+// Rotas da API
+router.use('/users', userRoutes);
+router.use('/autores', autorRoutes);
+router.use('/livros', livroRoutes);
 
-// Teste simples
-app.get('/', (req, res) => {
-  res.send('API está a funcionar!');
-});
+module.exports = router;
 
-module.exports = app;
+
 
 
 

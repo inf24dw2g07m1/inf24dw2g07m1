@@ -1,16 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect("/login");
-}
+const { isLoggedIn } = require("./auth");
 
 router.get("/protected", isLoggedIn, (req, res) => {
-  res.json({
-    message: "Rota protegida acessada com sucesso!",
-    user: req.user
-  });
+  res.send("Você está autenticado e acessou uma rota protegida!");
 });
 
-module.exports = router;
+module.exports = router; // exporta apenas o router (função middleware)
+
