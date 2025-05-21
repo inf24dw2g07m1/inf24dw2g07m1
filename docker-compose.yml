@@ -6,7 +6,7 @@ services:
     container_name: mysql_container
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root         # ✅ necessário para inicializar o MySQL
+      MYSQL_ROOT_PASSWORD: root         # necessário para inicializar o MySQL
       MYSQL_DATABASE: inf25dw2g07
       MYSQL_USER: user
       MYSQL_PASSWORD: userpass

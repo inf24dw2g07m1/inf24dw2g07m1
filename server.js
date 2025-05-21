@@ -4,7 +4,7 @@ const session = require("express-session");
 const passport = require("./src/config/passport");
 const path = require("path");
 const sequelize = require("./src/config/database");
-const app = require("./app"); // Tuas rotas da API REST
+const app = require("./app"); // As rotas da API REST
 
 const authRoutes = require("./src/routes/auth");
 const protectedRoutes = require("./src/routes/protected");
@@ -20,7 +20,7 @@ server.use(session({
 server.use(passport.initialize());
 server.use(passport.session());
 
-// JSON body parsing (útil caso tu uses bodyParser no app.js)
+// JSON body parsing (útil caso utiliza bodyParser no app.js)
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const livroController = require('../controllers/livrosControllers');
 
-// Todas as rotas agora são públicas (sem OAuth)
+
 router.get('/', livroController.getAllLivros);
 router.get('/:id', livroController.getLivroById);
 router.post('/', livroController.createLivro);

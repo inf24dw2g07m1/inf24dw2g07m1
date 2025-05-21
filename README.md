@@ -55,10 +55,16 @@ docker exec -it node_app_container node sync.js
 docker exec -it node_app_container node seed.js
 ## Parar containers:
 docker-compose down
+## Apagar containers:
+docker container prune -f
+## Apagar imagens:
+docker image prune -a -f
 ## Parar e remover volumes (reinicia banco do zero):
 docker-compose down -v
 ## Ver logs de execução:
 docker logs node_app_container
+## Fazer a verificação:
+docker ps -a OU docker images
 
 ### Acessar a aplicação
 API: http://localhost:3000/ 

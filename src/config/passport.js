@@ -6,7 +6,7 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
-    // Você pode associar o profile a um User aqui se quiser armazenar no banco
+    // Pode associar o profile a um User aqui se quiser armazenar na base de dados
     return done(null, profile);
 }));
 

@@ -18,7 +18,7 @@ const Livro = sequelize.define('Livro', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'Users', // o nome da tabela no banco
+      model: 'Users', // o nome da tabela na base de dados
       key: 'id',
     },
   },

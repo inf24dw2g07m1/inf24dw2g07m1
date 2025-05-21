@@ -19,7 +19,7 @@ const User = sequelize.define('User', {
     allowNull: false
   }
 }, {
-  tableName: 'Users',       // Garante consistência com o nome usado no banco
+  tableName: 'Users',       // Garante consistência com o nome usado na base de dados
   timestamps: true          // createdAt e updatedAt automaticamente
 });
 

@@ -5,7 +5,7 @@ const Livro = require('./src/models/livros');
 
 (async () => {
   try {
-    await sequelize.sync({ force: false }); // usa force: true só para deletar e recriar tudo
+    await sequelize.sync({ force: false }); // usa o force: true para deletar e recriar tudo
     console.log('Tabelas sincronizadas com sucesso.');
     process.exit();
   } catch (error) {

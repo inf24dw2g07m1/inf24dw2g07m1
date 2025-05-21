@@ -10,8 +10,7 @@ const swaggerDocument = yaml.load('./docs/swagger.yaml');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// Documentação Swagger
+//Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Rotas públicas (sem autenticação)
