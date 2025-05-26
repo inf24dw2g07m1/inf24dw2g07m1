@@ -4,6 +4,7 @@ const session = require("express-session");
 const passport = require("./src/config/passport");
 const path = require("path");
 const sequelize = require("./src/config/database");
+const { isLoggedIn } = require("./src/routes/auth");
 
 // Corrigido: desestruturando router de auth.js
 const { router: authRoutes } = require("./src/routes/auth");
@@ -32,6 +33,15 @@ server.use(express.urlencoded({ extended: true }));
 // Arquivos estáticos (HTML de login e protected)
 server.use(express.static(path.join(__dirname, "public")));
 
+//logout
+server.get('/logout', isLoggedIn, (req, res, next) => {
+  req.logout(err => {
+    if (err) return next(err);
+    res.redirect('/auth/login');
+  });
+});
+
+
 // Rotas de autenticação
 server.use('/auth', authRoutes);
 
@@ -49,6 +59,7 @@ server.get("/", (req, res) => {
 server.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
+
 
 // Iniciar servidor
 const PORT = process.env.PORT || 3000;
