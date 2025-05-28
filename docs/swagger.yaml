@@ -3,10 +3,10 @@ info:
   title: API de Livraria
   description: API para gerenciamento de usuários, autores e livros
   version: "1.0.0"
- 
+
 servers:
   - url: http://localhost:3000/api
- 
+
 tags:
   - name: Usuários
     description: Operações relacionadas a usuários
@@ -14,12 +14,17 @@ tags:
     description: Operações relacionadas a autores
   - name: Livros
     description: Operações relacionadas a livros
- 
+
 paths:
   /users:
     get:
       tags: [Usuários]
       summary: Lista todos os usuários
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       responses:
         "200":
           description: Lista de usuários
@@ -32,6 +37,11 @@ paths:
     post:
       tags: [Usuários]
       summary: Cria um novo usuário
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       requestBody:
         required: true
         content:
@@ -41,11 +51,16 @@ paths:
       responses:
         "201":
           description: Usuário criado com sucesso
- 
+
   /users/{id}:
     get:
       tags: [Usuários]
       summary: Busca um usuário por ID
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       parameters:
         - name: id
           in: path
@@ -64,6 +79,11 @@ paths:
     put:
       tags: [Usuários]
       summary: Atualiza um usuário
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       parameters:
         - name: id
           in: path
@@ -82,6 +102,11 @@ paths:
     delete:
       tags: [Usuários]
       summary: Remove um usuário
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       parameters:
         - name: id
           in: path
@@ -91,11 +116,16 @@ paths:
       responses:
         "204":
           description: Removido com sucesso
- 
+
   /autores:
     get:
       tags: [Autores]
       summary: Lista todos os autores
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       responses:
         "200":
           description: Lista de autores
@@ -108,6 +138,11 @@ paths:
     post:
       tags: [Autores]
       summary: Cria um novo autor
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       requestBody:
         required: true
         content:
@@ -117,11 +152,16 @@ paths:
       responses:
         "201":
           description: Autor criado com sucesso
- 
+
   /autores/{id}:
     get:
       tags: [Autores]
       summary: Busca autor por ID
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       parameters:
         - name: id
           in: path
@@ -140,6 +180,11 @@ paths:
     put:
       tags: [Autores]
       summary: Atualiza um autor
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       parameters:
         - name: id
           in: path
@@ -158,6 +203,11 @@ paths:
     delete:
       tags: [Autores]
       summary: Remove um autor
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       parameters:
         - name: id
           in: path
@@ -167,11 +217,16 @@ paths:
       responses:
         "204":
           description: Autor removido com sucesso
- 
+
   /livros:
     get:
       tags: [Livros]
       summary: Lista todos os livros
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       responses:
         "200":
           description: Lista de livros
@@ -184,6 +239,11 @@ paths:
     post:
       tags: [Livros]
       summary: Cria um novo livro
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       requestBody:
         required: true
         content:
@@ -193,11 +253,16 @@ paths:
       responses:
         "201":
           description: Livro criado com sucesso
- 
+
   /livros/{id}:
     get:
       tags: [Livros]
       summary: Busca livro por ID
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       parameters:
         - name: id
           in: path
@@ -216,6 +281,11 @@ paths:
     put:
       tags: [Livros]
       summary: Atualiza um livro
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       parameters:
         - name: id
           in: path
@@ -234,6 +304,11 @@ paths:
     delete:
       tags: [Livros]
       summary: Remove um livro
+      security:
+        - googleOAuth:
+            - openid
+            - email
+            - profile
       parameters:
         - name: id
           in: path
@@ -243,8 +318,20 @@ paths:
       responses:
         "204":
           description: Livro removido com sucesso
- 
+
 components:
+  securitySchemes:
+    googleOAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            openid: Acesso à identidade do usuário
+            email: Acesso ao email do usuário
+            profile: Acesso ao perfil do usuário
+
   schemas:
     User:
       type: object
@@ -261,7 +348,7 @@ components:
           type: string
         updatedAt:
           type: string
- 
+
     UserInput:
       type: object
       properties:
@@ -275,7 +362,7 @@ components:
         - nome
         - email
         - password
- 
+
     Autor:
       type: object
       properties:
@@ -289,7 +376,7 @@ components:
           type: string
         updatedAt:
           type: string
- 
+
     AutorInput:
       type: object
       properties:
@@ -300,7 +387,7 @@ components:
       required:
         - nome
         - email
- 
+
     Livro:
       type: object
       properties:
@@ -314,7 +401,7 @@ components:
           type: string
         updatedAt:
           type: string
- 
+
     LivroInput:
       type: object
       properties:
@@ -325,4 +412,3 @@ components:
       required:
         - nome
         - autorId
- 

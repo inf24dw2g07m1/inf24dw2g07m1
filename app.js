@@ -10,7 +10,13 @@ const { isLoggedIn } = require('./src/routes/auth');
 const swaggerDocument = yaml.load('./docs/swagger.yaml');
 
 // Proteção Swagger
-router.use('/docs', isLoggedIn, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+router.use('/docs', isLoggedIn, swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
+    oauth: {
+        clientId: '542578077652-7c662u1ujlbk015fdrqcvo1i9ro31fh1.apps.googleusercontent.com',
+        scopes: 'openid email profile' 
+    }
+}
+));
 
 // Rotas da API
 router.use('/users', userRoutes);

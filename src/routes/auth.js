@@ -8,7 +8,7 @@ function isLoggedIn(req, res, next) {
 }
 
 router.get("/google", passport.authenticate("google", {
-  scope: ["profile", "email"]
+  scope: ["openid", "profile", "email"]
 }));
 
 router.get("/google/callback",
