@@ -2,27 +2,38 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const User = sequelize.define('User', {
-  nome: {
+  githubId: {
     type: DataTypes.STRING,
-    allowNull: false
+    unique: true,
+    allowNull: true
+  },
+  displayName: {
+    type: DataTypes.STRING,
+    allowNull: true
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true,
     validate: {
-      isEmail: true // Validação adicional (opcional)
+      isEmail: true
     }
   },
+  photo: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  // Se quiser manter password local para cadastro futuro (opcional)
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   }
 }, {
-  tableName: 'Users',       // Garante consistência com o nome usado na base de dados
-  timestamps: true          // createdAt e updatedAt automaticamente
+  tableName: 'Users',
+  timestamps: true
 });
 
 module.exports = User;
+
 
 

@@ -3,12 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login com Google</title>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    form { display: flex; flex-direction: column; gap: 10px; }
+    input, button { padding: 10px; font-size: 1rem; }
+    .msg { margin: 10px 0; color: green; }
+    .error { color: red; }
+    a { text-decoration: none; }
+  </style>
 </head>
 <body>
-  <h1>Login</h1>
-  <a href="/auth/google">
-    <button>Entrar com Google</button>
+  <h2>Login</h2>
+
+  <div id="mensagem"></div>
+
+  <form action="/auth/login" method="POST">
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Senha" required />
+    <button type="submit">Entrar</button>
+  </form>
+
+  <hr />
+
+  <a href="/auth/github">
+    <button style="width: 100%; background-color: #333; color: white;">
+      Entrar com GitHub
+    </button>
   </a>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const mensagem = document.getElementById('mensagem');
+
+    if (urlParams.get('logout') === '1') {
+      mensagem.innerHTML = '<p class="msg">✅ Você saiu com sucesso.</p>';
+    }
+    if (urlParams.get('erro') === '1') {
+      mensagem.innerHTML = '<p class="msg error">❌ Email ou senha inválidos.</p>';
+    }
+  </script>
 </body>
 </html>

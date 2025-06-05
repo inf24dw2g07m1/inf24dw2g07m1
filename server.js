@@ -1,19 +1,17 @@
 require('dotenv').config();
 const express = require("express");
 const session = require("express-session");
-const passport = require("./src/config/passport");
+const passport = require("passport"); // ✅ Corrigido: importa o pacote oficial
+require("./src/config/passport");     // ✅ Aplica as estratégias definidas
+
 const path = require("path");
 const sequelize = require("./src/config/database");
 const { isLoggedIn } = require("./src/routes/auth");
 
-// Corrigido: desestruturando router de auth.js
+// Rotas
 const { router: authRoutes } = require("./src/routes/auth");
-
-// protected.js já exporta apenas router 
 const protectedRoutes = require("./src/routes/protected");
-
-// app.js agora exporta apenas um Router
-const appRoutes = require("./app"); 
+const appRoutes = require("./app"); // router com /api/* e /api/docs
 
 const server = express();
 
@@ -21,7 +19,7 @@ const server = express();
 server.use(session({
   secret: process.env.SESSION_SECRET || "topsecret",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false
 }));
 server.use(passport.initialize());
 server.use(passport.session());
@@ -30,36 +28,35 @@ server.use(passport.session());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
-// Arquivos estáticos (HTML de login e protected)
+// Arquivos estáticos (HTML de login e protegida)
 server.use(express.static(path.join(__dirname, "public")));
 
-//logout
+// 🔐 Logout direto (fora do /auth)
 server.get('/logout', isLoggedIn, (req, res, next) => {
   req.logout(err => {
     if (err) return next(err);
-    res.redirect('/auth/login');
+    res.redirect('/auth/login?logout=1');
   });
 });
-
 
 // Rotas de autenticação
 server.use('/auth', authRoutes);
 
-// Rota protegida com isLoggedIn
+// Rota protegida personalizada
 server.use(protectedRoutes);
 
-// Rotas da API REST + Swagger
+// Rotas REST da API + Swagger (/api/users, /api/docs etc.)
 server.use('/api', appRoutes);
 
-// Página inicial e login
+// Página inicial
 server.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "protected.html"));
 });
 
+// Página de login local
 server.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
-
 
 // Iniciar servidor
 const PORT = process.env.PORT || 3000;
@@ -72,3 +69,4 @@ server.listen(PORT, async () => {
     console.error("Erro ao conectar com o banco:", error);
   }
 });
+
