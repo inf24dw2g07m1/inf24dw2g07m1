@@ -6,12 +6,12 @@ services:
     container_name: mysql_container
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root         # necessário para inicializar o MySQL
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: inf25dw2g07
       MYSQL_USER: user
       MYSQL_PASSWORD: userpass
     ports:
-      - "3307:3306"                     # 3307 externo (host), 3306 interno (container)
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -25,14 +25,20 @@ services:
       - mysql
     volumes:
       - .:/usr/src/app
-    command: sh -c "npm install && node server.js"
+    command: sh -c "npm install && node sync.js && node seed.js && node server.js"
     environment:
-      DB_HOST: mysql                   #  nome do serviço MySQL
+      DB_HOST: mysql
       DB_USER: user
       DB_PASSWORD: userpass
       DB_NAME: inf25dw2g07
-      DB_PORT: 3306                    # use sempre a porta interna aqui!
+      DB_PORT: 3306
+      PORT: 3000               #  Adicione esta linha para definir a porta da aplicação
+      SESSION_SECRET: minha_chave_super_secreta
+      GITHUB_CLIENT_ID: Ov23lihcv1P8d877iJEk
+      GITHUB_CLIENT_SECRET: 50eeaf4594c228051ae78d11da588ff1189ec124
 
 volumes:
   mysql_data:
+
+
 

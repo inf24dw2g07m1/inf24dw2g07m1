@@ -1,3 +1,9 @@
+const path = require('path');
+
+require('dotenv').config({
+  path: path.resolve(__dirname, '../environment/', `${process.env.NODE_ENV}.env`)
+});
+
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
@@ -6,7 +12,7 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
-    port: 3306, // Porta interna do container MySQL
+    port: process.env.DB_PORT || 3306,
     dialect: 'mysql',
     logging: console.log
   }

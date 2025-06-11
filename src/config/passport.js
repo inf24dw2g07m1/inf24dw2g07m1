@@ -1,9 +1,13 @@
-const passport = require('passport');
+const path = require('path');
+require('dotenv').config({
+  path: path.resolve(__dirname, '../../environment/', `${process.env.NODE_ENV || 'dev'}.env`)
+});
+
+const passport = require('passport'); 
 const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
 const bcrypt = require('bcrypt');
-const User = require('../models/User');
-require('dotenv').config();
+const User = require('../models/user');
 
 // 🔐 Estratégia de login local
 passport.use(new LocalStrategy({
@@ -47,4 +51,3 @@ passport.deserializeUser(async (id, done) => {
   const user = await User.findByPk(id);
   done(null, user);
 });
-

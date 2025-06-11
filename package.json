@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
+    "start:dev": "cross-env NODE_ENV=dev node server.js",
+    "start:mysql": "cross-env NODE_ENV=mysql node server.js",
     "dev": "nodemon server.js",
-    "sync": "node src/sync.js"
+    "sync": "docker exec -i node_app_container node sync.js", 
+    "seed": "docker exec -i node_app_container node seed.js",
+    "up": "docker-compose up --build -d && npm run sync && npm run seed"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +34,7 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "nodemon": "^3.1.10"
   }
 }

@@ -66,6 +66,9 @@ docker logs node_app_container
 ## Fazer a verificação:
 docker ps -a OU docker images
 
+##
+Os Arquivos sync.js (para criar tabelas) e seed.js (para inserir dados) funcionando manualmente com npm run sync e npm run seed.
+
 ### Acessar a aplicação
 API: http://localhost:3000/ 
 Página protegida: [http://localhost:3000](http://localhost:3000)
