@@ -74,12 +74,11 @@ GITHUB_CLIENT_SECRET=xxx
 npm install
 
 ## 3.1 Instalação das Dependências locais:
-npm install express sequelize mysql2 dotenv cors express-session passport passport-google-oauth20 swagger-ui-express yamljs
+* npm install express sequelize mysql2 dotenv cors express-session passport passport-google-oauth20 swagger-ui-express yamljs
 
 ## 4. Arrancar o projeto com Docker Compose
-```bash
-docker-compose up --build
-```
+* docker-compose up --build
+
 * Funcionalidades deste comando:
     * Instala as dependências
     * Sincroniza tabelas com `sync.js`
@@ -108,15 +107,22 @@ Após login, o usuário pode acessar rotas protegidas e visualizar apenas seus d
 
 ### DockerHub
 As imagens dos containers estão disponíveis publicamente em:
+Backend Node.js: 
 * [DockerHub - Node App](https://hub.docker.com/r/inf24dw2g07/livraria-node)
-* [DockerHub - MySQL](https://hub.docker.com/_/mysql)
+Base de Dados MySQL:
+* [DockerHub - MySQL](https://hub.docker.com/r/inf24dw2g07/livraria-mysql)
+
+* Pode-se fazer pull das imagens com:
+```bash
+* docker pull inf24dw2g07/livraria-node
+* docker pull inf24dw2g07/livraria-mysql
+```
 
 ### Documentação Swagger
 A documentação Swagger (OpenAPI 3.0) está disponível em:
-```
+```bash
 GET /api/docs
 ```
-
 ### Contribuidores
 * @Alessandro0012 (a039890@umaia.pt);
 * @Tiagodebrit0 (a041587@umaia.pt).
