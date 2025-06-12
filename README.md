@@ -57,8 +57,8 @@ inf24dw2g07/
 ### Passos para Execução:
 ## 1. Clonar o Repositório
 ```bash
-git clone https://github.com/inf24dw2g07/livraria-api.git
-cd livraria-api
+* git clone https://github.com/inf24dw2g07/livraria-api.git
+* cd livraria-api
 ```
 
 ## 2. Criar e configurar o `.env`
@@ -71,7 +71,7 @@ GITHUB_CLIENT_ID=xxx
 GITHUB_CLIENT_SECRET=xxx
 ```
 ## 3. Instalação das Dependências locais
-npm install
+* npm install
 
 ## 3.1 Instalação das Dependências locais:
 * npm install express sequelize mysql2 dotenv cors express-session passport passport-google-oauth20 swagger-ui-express yamljs
