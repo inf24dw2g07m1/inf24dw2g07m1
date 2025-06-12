@@ -1,12 +1,35 @@
-# Projeto INF25DW2G07 - API RESTful com Autenticação Google OAuth 2.0
+### Projeto API RESTful - Livraria
 Trabalho DW2 Grupo 07 (livraria)
 
-Esta é uma API RESTful desenvolvida em Node.js com Express, utilizando o Sequelize para integração com banco de dados MySQL, autenticação via OAuth2.0, documentação com Swagger e os containers com Docker.  
-Desenvolvido por: @Alessandro0012 (a039890@umaia.pt); @Tiagodebrit0 (a041587@umaia.pt); @IgorChad (a043765@umaia.pt).
+Contém o desenvolvimento de uma aplicação web com uma API RESTful protegida por autenticação OAuth 2.0, usando Node.js, Express, Sequelize e MySQL. O projeto foi desenvolvido no contexto curricular da unidade curricular de Desenvolvimento Web II (DW2) 
+Desenvolvido por: @Alessandro0012 (a039890@umaia.pt); @Tiagodebrit0 (a041587@umaia.pt).
 
-### Tecnologias que utilizamos no processo
+##  Descrição do Projeto
+O projeto simula uma API de livraria, permitindo a gestão de usuários, autores e livros. A aplicação está protegida por autenticação local e via GitHub (OAuth 2.0).
+
+## Estrutura do Projeto
+```
+inf24dw2g07/
+├── app.js               # Inicialização das rotas da API
+├── docker-compose.yml   # Configuração dos containers Docker
+├── Dockerfile           # Build da aplicação Node.js
+├── public/              # HTML estático (login, página protegida)
+├── seed.js              # Popula a base de dados com dados fictícios
+├── sync.js              # Criação/sincronização do schema do banco
+├── server.js            # Inicialização do servidor Express
+├── src/
+│   ├── config/
+│   │   ├── database.js  # Configuração Sequelize
+│   │   └── passport.js  # Estratégias de autenticação
+│   ├── controllers/     # Controladores REST
+│   ├── models/          # Modelos Sequelize (User, Autor, Livro)
+│   ├── routes/          # Rotas protegidas e públicas
+│   └── docs/            # Documentação Swagger
+```
+
+## Tecnologias que utilizamos no processo:
 - API RESTful com Express
-- Autenticação via Google (OAuth 2.0)
+- Autenticação local e via GitHub (OAuth 2.0).
 - Proteção de rotas com sessão (passport.js)
 - Banco de dados MySQL com Sequelize ORM
 - Relação 1:n entre autores e livros
@@ -14,99 +37,88 @@ Desenvolvido por: @Alessandro0012 (a039890@umaia.pt); @Tiagodebrit0 (a041587@uma
 - Docker (multi-container: Node.js + MySQL)
 - Collection Postman incluída
 
-## Pré-Requisitos
-- Docker: https://www.docker.com/  
-- Docker Compose: https://docs.docker.com/compose/  
-- Terminal (bash, CMD ou PowerShell)
+## Pré-Requisitos:
+* Docker: https://www.docker.com/  
+* Docker Compose: https://docs.docker.com/compose/  
+* Terminal (bash, CMD ou PowerShell)
 
-### Variáveis de Ambiente ".env"
-Cria um arquivo `.env` na raiz com o seguinte conteúdo:
+## Funcionalidades:
+* API REST com Express e Sequelize
+* CRUD completo com os 4 verbos HTTP: GET, POST, PUT, DELETE
+* Três recursos diferentes: `users`, `autores`, `livros`
+* Relação 1\:N entre `autor` e `livros`
+* Retorno em JSON
+* Autenticação e autorização com Passport.js (Local e OAuth2 com GitHub)
+* Usuário autenticado só acede aos seus próprios dados (em users)
+* Detalhe do usuário logado apresentado no console
+* Documentação OpenAPI 3.0 (Swagger UI)
+* Multi-container: Docker + Docker Compose (MySQL + Node)
 
-## DB
-DB_NAME=inf25dw2g07
-DB_USER=user
-DB_PASSWORD=userpass
-DB_HOST=mysql
-DB_PORT=3306
+### Passos para Execução:
+## 1. Clonar o Repositório
+```bash
+git clone https://github.com/inf24dw2g07/livraria-api.git
+cd livraria-api
+```
 
-## Autenticação Google
-GITHUB_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID_HERE
-GITHUB_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET_HERE
-
-## App
-PORT=3000
-
-### Instalação das Dependências locais
+## 2. Criar e configurar o `.env`
+```
+```
+* Editar o `.env` com as suas variáveis:
+```env
+SESSION_SECRET=topsecret
+GITHUB_CLIENT_ID=xxx
+GITHUB_CLIENT_SECRET=xxx
+```
+## 3. Instalação das Dependências locais
 npm install
-## Instalação das Dependências locais
+
+## 3.1 Instalação das Dependências locais:
 npm install express sequelize mysql2 dotenv cors express-session passport passport-google-oauth20 swagger-ui-express yamljs
 
-### Passos úteis para Instalação e Execução
-## Clonar do GitHub:
-git clone https://github.com/Trabalho-inf25dw2g07/inf25dw2g07.git
-cd inf25dw2g07
-
-### Comandos do Docker:
-## Upload dos containers com Docker Compose:
-docker-compose up --build -d
-## Dentro do container Node.js, sincronizar as tabelas:
-docker exec -it node_app_container node sync.js
-## Para abrir o banco com os dados inseridos:
-docker exec -it node_app_container node seed.js
-## Parar containers:
-docker-compose down
-## Apagar containers:
-docker container prune -f
-## Apagar imagens:
-docker image prune -a -f
-## Parar e remover volumes (reinicia banco do zero):
-docker-compose down -v
-## Ver logs de execução:
-docker logs node_app_container
-## Fazer a verificação:
-docker ps -a OU docker images
-
-##
-Os Arquivos sync.js (para criar tabelas) e seed.js (para inserir dados) funcionando manualmente com npm run sync e npm run seed.
-
-### Acessar a aplicação
-API: http://localhost:3000/ 
-Página protegida: [http://localhost:3000](http://localhost:3000)
-Login: [http://localhost:3000/login](http://localhost:3000/login)
-Swagger (API docs): [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
-
-## Estrutura do Trabalho
+## 4. Arrancar o projeto com Docker Compose
+```bash
+docker-compose up --build
 ```
-inf25dw2g07/
-├── src/
-│   ├── config/           # Configurações (db, passport)
-│   ├── controllers/      # Lógica dos endpoints
-│   ├── models/           # Modelos Sequelize
-│   ├── routes/           # Rotas REST e de autenticação
-│   ├── seeders/          # Dados de seed para popular o banco
-│   └── docs/             # Swagger YAML (OpenAPI)
-├── public/               # HTML para login e rota protegida
-├── .env                  # Variáveis de ambiente (Não precisa estar no commit)
-├── .gitignore
-├── docker-compose.yml
-├── Dockerfile
-├── package.json
-├── app.js                # Rotas REST
-├── server.js             # Entrada principal com autenticação
+* Funcionalidades deste comando:
+    * Instala as dependências
+    * Sincroniza tabelas com `sync.js`
+    * Insere dados com `seed.js`
+    * Inicia o servidor com `server.js`
+
+## 5. Acessar a aplicação
+* App funciona em: [http://localhost:3000](http://localhost:3000)
+* Swagger: [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
+* Login: [http://localhost:3000/login](http://localhost:3000/login)
+
+## 6. Testar com o Postman
+Importar a coleção Postman disponível em `postman_collection.json`
+
+### Autenticação
+* Local (e-mail/senha)
+* GitHub OAuth 2.0
+
+Após login, o usuário pode acessar rotas protegidas e visualizar apenas seus dados (recurso users).
+
+### Rotas Protegidas
+* `GET /protected`
+* `GET /api/users` → apenas dados do usuário logado
+* `GET /api/autores`, `POST /api/autores` etc.
+* `GET /api/livros`, `POST /api/livros` etc.
+
+### DockerHub
+As imagens dos containers estão disponíveis publicamente em:
+* [DockerHub - Node App](https://hub.docker.com/r/inf24dw2g07/livraria-node)
+* [DockerHub - MySQL](https://hub.docker.com/_/mysql)
+
+### Documentação Swagger
+A documentação Swagger (OpenAPI 3.0) está disponível em:
+```
+GET /api/docs
 ```
 
-## Funcionalidades Implementadas 
-- Arquitetura REST
-- 3 recursos diferentes (`users`, `autores`, `livros`)
-- Operações CRUD (GET, POST, PUT, DELETE)
-- Relação 1:n (`autor` → `livros`)
-- JSON nas respostas
-- Autenticação e autorização com Google OAuth 2.0
-- Proteção de rota com `passport` + sessão
-- Swagger OpenAPI 3.0
-- Docker multi-container (MySQL + Node.js)
-- Collection Postman incluída
-
-## Testes
-Utilize o Postman (https://www.postman.com/) para testar todos os endpoints.  
-Pode-se criar manualmente ou exportar uma collection.
+### Contribuidores
+* @Alessandro0012 (a039890@umaia.pt);
+* @Tiagodebrit0 (a041587@umaia.pt).
+---
+# Projeto desenvolvido para a unidade curricular de Desenvolvimento Web II - Universidade da Maia
