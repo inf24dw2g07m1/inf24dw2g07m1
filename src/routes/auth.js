@@ -7,7 +7,7 @@ function isLoggedIn(req, res, next) {
   res.redirect("/auth/login");
 }
 
-// 🌐 GitHub OAuth2
+// GitHub OAuth2
 router.get("/github", passport.authenticate("github", {
   scope: ["user:email"]
 }));
@@ -21,7 +21,7 @@ router.get("/github/callback",
   }
 );
 
-// 🔐 Login local (formulário POST)
+// Login local (formulário POST)
 router.post("/login",
   passport.authenticate("local", {
     failureRedirect: "/auth/login?erro=1",
@@ -29,7 +29,7 @@ router.post("/login",
   })
 );
 
-// 🔐 Logout
+// Logout
 router.get("/logout", (req, res, next) => {
   req.logout(err => {
     if (err) return next(err);
@@ -37,12 +37,12 @@ router.get("/logout", (req, res, next) => {
   });
 });
 
-// 🔐 Página de login
+// Página de login
 router.get("/login", (req, res) => {
   const mensagem = req.query.logout === '1'
-    ? '<p style="color:green;">✅ Você saiu com sucesso.</p>'
+    ? '<p style="color:green;">Você saiu com sucesso.</p>'
     : req.query.erro === '1'
-      ? '<p style="color:red;">❌ Email ou senha inválidos.</p>'
+      ? '<p style="color:red;">Email ou senha inválidos.</p>'
       : '';
   res.send(`
     <h2>Login</h2>

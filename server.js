@@ -4,8 +4,8 @@ const PORT = process.env.PORT || 3000;
 
 const express = require("express");
 const session = require("express-session");
-const passport = require("passport"); // ✅ Corrigido: importa o pacote oficial
-require("./src/config/passport");     // ✅ Aplica as estratégias definidas
+const passport = require("passport"); 
+require("./src/config/passport");     
 
 const path = require("path");
 const sequelize = require("./src/config/database");
@@ -34,7 +34,7 @@ server.use(express.urlencoded({ extended: true }));
 // Arquivos estáticos (HTML de login e protegida)
 server.use(express.static(path.join(__dirname, "public")));
 
-// 🔐 Logout direto (fora do /auth)
+// Logout direto (fora do /auth)
 server.get('/logout', isLoggedIn, (req, res, next) => {
   req.logout(err => {
     if (err) return next(err);
