@@ -10,7 +10,15 @@ const { isLoggedIn } = require('./src/routes/auth');
 const swaggerDocument = yaml.load('./docs/swagger.yaml');
 
 // Proteção Swagger
-router.use('/docs', isLoggedIn, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
+  swaggerOptions: {
+    oauth2RedirectUrl: 'http://localhost:3000/auth/github/callback',
+  },
+  oauth: {
+    clientId: process.env.GITHUB_CLIENT_ID, // ou direto a string, se preferir
+    scopes: 'read:user user',
+  }
+}));
 
 
 // Rotas da API
