@@ -22,19 +22,23 @@ exports.getLivroById = async (req, res) => {
 exports.createLivro = async (req, res) => {
   const { nome, autorId } = req.body;
 
+  if (!req.user || !req.user.id) {
+    return res.status(401).json({ error: 'Usuário não autenticado.' });
+  }
+
   try {
     const novo = await Livro.create({
       nome,
       autorId,
-      userId: req.user.id // <-- isso é obrigatório se estiver no modelo!
+      userId: req.user.id  // 🔐 adiciona o dono do livro
     });
-
     res.status(201).json(novo);
   } catch (error) {
-    console.error('Erro ao criar livro:', error); // <-- Aqui imprime o erro completo
+    console.error(error);
     res.status(500).json({ error: 'Erro ao criar livro.' });
   }
 };
+
 
 
 exports.updateLivro = async (req, res) => {
